@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PokerApp — Track every session. Settle in seconds. The poker tracker your group has been missing." />
+  <meta property="og:title" content="PokerApp" />
+  <meta property="og:description" content="Track every session. Settle in seconds." />
+  <title>PokerApp — Track. Settle. Dominate.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #07070F;
+      --bg-2:         #0D0D1A;
+      --surface:      rgba(255,255,255,0.04);
+      --surface-hover:rgba(255,255,255,0.07);
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.15);
+      --text:         #FFFFFF;
+      --muted:        rgba(255,255,255,0.48);
+      --dimmed:       rgba(255,255,255,0.22);
+      --green:        #22C55E;
+      --red:          #EF4444;
+      --green-dim:    rgba(34,197,94,0.12);
+      --red-dim:      rgba(239,68,68,0.12);
+      --radius-card:  22px;
+      --radius-pill:  100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Dot-grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Ambient top glow ── */
+    .ambient {
+      position: fixed;
+      top: -30vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      height: 80vh;
+      background: radial-gradient(ellipse at 40% 50%, rgba(239,68,68,0.06) 0%, transparent 55%),
+                  radial-gradient(ellipse at 60% 50%, rgba(34,197,94,0.06) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav, main, footer, .ambient { position: relative; z-index: 1; }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(7,7,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      border: 1px solid rgba(34,197,94,0.3);
+      background: rgba(34,197,94,0.08);
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.2px;
+    }
+
+    /* ─────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 100px;
+      gap: 0;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--dimmed);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
+    }
+
+    .hero-spade {
+      font-size: clamp(96px, 17vw, 188px);
+      line-height: 1;
+      background: linear-gradient(to right, var(--red) 50%, var(--green) 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 44px;
+      display: block;
+      opacity: 0;
+      animation: spadeIn 1s cubic-bezier(0.22,1,0.36,1) 0.05s forwards;
+      filter: drop-shadow(0 0 80px rgba(34,197,94,0.18)) drop-shadow(0 0 80px rgba(239,68,68,0.18));
+    }
+
+    .hero-headline {
+      font-size: clamp(42px, 6.5vw, 84px);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 1.03;
+      color: var(--text);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+    }
+
+    .hero-headline .accent {
+      background: linear-gradient(100deg, var(--red) 0%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 20px);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.42s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.54s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 15px 30px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      letter-spacing: -0.2px;
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 64px rgba(255,255,255,0.18);
+    }
+    .btn-primary .btn-icon { font-size: 18px; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 15px 24px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+    }
+
+    .hero-note {
+      margin-top: 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--dimmed);
+      letter-spacing: 0.5px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.66s forwards;
+    }
+
+    /* ─────────────────────────────────────────────
+       DIVIDER
+    ───────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    /* ─────────────────────────────────────────────
+       STATS
+    ───────────────────────────────────────────── */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 0 24px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+      padding: 52px 24px;
+      border-right: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .stat:last-child { border-right: none; }
+    .stat.visible { opacity: 1; transform: translateY(0); }
+
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-num.g { color: var(--green); }
+    .stat-num.r { color: var(--red); }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.1px;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION SHELL
+    ───────────────────────────────────────────── */
+    .section {
+      padding: 110px 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dimmed);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 4.5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -1.8px;
+      line-height: 1.08;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--muted);
+      text-align: center;
+      max-width: 460px;
+      margin: 0 auto 72px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    /* ─────────────────────────────────────────────
+       FEATURES GRID
+    ───────────────────────────────────────────── */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 34px 30px;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+    }
+
+    .card-icon {
+      font-size: 26px;
+      display: block;
+      margin-bottom: 22px;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      margin-bottom: 10px;
+    }
+    .card-desc {
+      font-size: 14.5px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* ─────────────────────────────────────────────
+       HIGHLIGHT (large 2-col card)
+    ───────────────────────────────────────────── */
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .highlight-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 44px 38px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s;
+    }
+    .highlight-card.visible { opacity: 1; transform: translateY(0); }
+    .highlight-card:hover { border-color: var(--border-hover); }
+
+    .highlight-card.win {
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 60%, transparent 100%);
+    }
+    .highlight-card.lose {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.02) 60%, transparent 100%);
+    }
+
+    .highlight-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .win .highlight-tag { color: var(--green); }
+    .lose .highlight-tag { color: var(--red); }
+
+    .highlight-amount {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 600;
+      letter-spacing: -2px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .win .highlight-amount { color: var(--green); }
+    .lose .highlight-amount { color: var(--red); }
+
+    .highlight-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────────
+       STEPS
+    ───────────────────────────────────────────── */
+    .steps-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .steps-line {
+      position: absolute;
+      left: 23px;
+      top: 44px;
+      bottom: 44px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--green), var(--red));
+      opacity: 0.2;
+    }
+
+    .step {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 28px 0;
+      opacity: 0;
+      transform: translateX(-18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .step.visible { opacity: 1; transform: translateX(0); }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dimmed);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-content { padding-top: 10px; }
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      margin-bottom: 7px;
+    }
+    .step-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─────────────────────────────────────────────
+       CTA BOX
+    ───────────────────────────────────────────── */
+    .cta-section {
+      padding: 100px 24px;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(34,197,94,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-box {
+      max-width: 580px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 64px 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(34,197,94,0.05) 0%, transparent 50%, rgba(239,68,68,0.05) 100%);
+      pointer-events: none;
+    }
+    .cta-box.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-spade {
+      font-size: 48px;
+      background: linear-gradient(to right, var(--red) 50%, var(--green) 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .cta-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .cta-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 44px;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 15px 34px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      letter-spacing: -0.2px;
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
+      position: relative;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 56px rgba(255,255,255,0.14);
+    }
+    .cta-note {
+      margin-top: 22px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--dimmed);
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--dimmed);
+    }
+
+    /* ─────────────────────────────────────────────
+       ANIMATIONS
+    ───────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spadeIn {
+      from { opacity: 0; transform: scale(0.88); filter: blur(12px); }
+      to   { opacity: 1; transform: scale(1);    filter: drop-shadow(0 0 80px rgba(34,197,94,0.18)) drop-shadow(0 0 80px rgba(239,68,68,0.18)); }
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      nav { padding: 18px 24px; }
+      .nav-link { display: none; }
+      .highlight-grid { grid-template-columns: 1fr; }
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .cta-box { padding: 44px 28px; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 36px 24px; }
+      .stat:last-child { border-bottom: none; }
+      .stats-row { flex-direction: column; }
+      .steps-line { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- ── Nav ─────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#">PokerApp</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link" href="#how">How it works</a>
+    <span class="nav-badge">Coming Soon</span>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── Hero ──────────────────────────────────── -->
+  <section class="hero">
+    <span class="hero-eyebrow">Track · Settle · Dominate</span>
+    <span class="hero-spade">♠</span>
+    <h1 class="hero-headline">Your game,<br><span class="accent">quantified.</span></h1>
+    <p class="hero-sub">The poker tracker your group has been missing. Log sessions, settle debts in seconds, and let the leaderboard speak for itself.</p>
+    <div class="hero-actions">
+      <a href="#notify" class="btn-primary">
+        <span class="btn-icon"></span>
+        Coming to the App Store
+      </a>
+      <a href="#features" class="btn-secondary">See features ↓</a>
+    </div>
+    <p class="hero-note">iOS · Free to download</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Stats ─────────────────────────────────── -->
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num g">$0</span>
+      <span class="stat-label">Spreadsheets needed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Sessions tracked</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num r">0</span>
+      <span class="stat-label">Disputed debts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Characters to join a group</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Features ──────────────────────────────── -->
+  <section class="section" id="features">
+    <p class="eyebrow">What's inside</p>
+    <h2 class="section-title">Everything your game needs.</h2>
+    <p class="section-sub">Built for serious players who want serious data — without the complexity.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h3 class="card-title">Instant Settlements</h3>
+        <p class="card-desc">After every session, PokerApp calculates the minimum set of transactions. No IOUs, no confusion — exact figures, instantly.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h3 class="card-title">Live Leaderboards</h3>
+        <p class="card-desc">Track who's up and who's bleeding across your group. Session history, net totals, and trends — all in one place.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏆</span>
+        <h3 class="card-title">Seasons</h3>
+        <p class="card-desc">Run month-long competitions. Crown a season champion. Sessions you play during an active season count automatically.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🃏</span>
+        <h3 class="card-title">Hall of Fame</h3>
+        <p class="card-desc">Log legendary hands — royal flushes, brutal bad beats, audacious bluffs. Let the table remember everything forever.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">👥</span>
+        <h3 class="card-title">Group Management</h3>
+        <p class="card-desc">Invite anyone with a 6-character code. Guests join without an account and can claim their stats later.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💸</span>
+        <h3 class="card-title">Venmo & CashApp</h3>
+        <p class="card-desc">Payment handles built right in. Settlement says $40 — one tap, money sent. No more "I'll get you next time."</p>
+      </div>
+    </div>
+
+    <!-- Win / Lose highlight cards -->
+    <div class="highlight-grid" style="margin-top: 14px;">
+      <div class="highlight-card win">
+        <span class="highlight-tag">Best night</span>
+        <span class="highlight-amount">+$840</span>
+        <p class="highlight-sub">Know your biggest win, your hottest streak, and exactly how much the table owes you.</p>
+      </div>
+      <div class="highlight-card lose">
+        <span class="highlight-tag">Worst night</span>
+        <span class="highlight-amount">−$320</span>
+        <p class="highlight-sub">Know your biggest loss too. Accountability is part of the game. PokerApp keeps the score honest.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── How it works ───────────────────────────── -->
+  <section class="section" id="how">
+    <p class="eyebrow">How it works</p>
+    <h2 class="section-title">Dead simple.</h2>
+    <p class="section-sub">From first hand to fully settled in three steps.</p>
+
+    <div class="steps-wrap">
+      <div class="steps-line"></div>
+
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3 class="step-title">Create your group</h3>
+          <p class="step-desc">Name your crew and share the 6-character invite code. Everyone joins instantly — no account required to sit down.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3 class="step-title">Log the session</h3>
+          <p class="step-desc">Enter each player's final chip count. PokerApp handles the math — buy-ins, rebuys, net totals. Every number accounted for.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3 class="step-title">Settle up</h3>
+          <p class="step-desc">The app calculates the shortest path to even. Tap to request payment via Venmo or CashApp. Done before you leave the table.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CTA ───────────────────────────────────── -->
+  <section class="cta-section" id="notify">
+    <div class="cta-box">
+      <span class="cta-spade">♠</span>
+      <h2 class="cta-title">Ready to quantify your edge?</h2>
+      <p class="cta-sub">PokerApp is coming to the App Store. The table has always known who the best player is. Now there's proof.</p>
+      <a href="mailto:husseinabdou06@gmail.com?subject=PokerApp Launch — Notify me" class="cta-btn">
+        <span></span>
+        Notify me at launch
+      </a>
+      <p class="cta-note">No spam. One email when it's live.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ───────────────────────────────────── -->
+<footer>
+  <span class="footer-logo">PokerApp</span>
+  <nav class="footer-links">
+    <a href="privacy">Privacy Policy</a>
+    <a href="terms">Terms of Service</a>
+    <a href="mailto:husseinabdou06@gmail.com">Support</a>
+  </nav>
+  <span class="footer-copy">© 2026 Hussein Abdou</span>
+</footer>
+
+<script>
+  // Scroll-triggered reveal using IntersectionObserver
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const delay = parseInt(entry.target.dataset.delay || '0');
+      setTimeout(() => entry.target.classList.add('visible'), delay);
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  // Stats
+  document.querySelectorAll('.stat').forEach((el, i) => {
+    el.dataset.delay = i * 90;
+    io.observe(el);
+  });
+
+  // Feature cards
+  document.querySelectorAll('.card').forEach((el, i) => {
+    el.dataset.delay = i * 70;
+    io.observe(el);
+  });
+
+  // Highlight cards
+  document.querySelectorAll('.highlight-card').forEach((el, i) => {
+    el.dataset.delay = i * 120;
+    io.observe(el);
+  });
+
+  // Steps
+  document.querySelectorAll('.step').forEach((el, i) => {
+    el.dataset.delay = i * 130;
+    io.observe(el);
+  });
+
+  // CTA box
+  document.querySelectorAll('.cta-box').forEach(el => io.observe(el));
+
+  // Smooth active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === `#${entry.target.id}`
+            ? 'rgba(255,255,255,0.9)'
+            : '';
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => scrollObserver.observe(s));
+</script>
+
+</body>
+</html>
