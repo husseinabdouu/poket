@@ -62,8 +62,8 @@
       background: rgba(7,7,15,0.88);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
     }
-    .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .nav-logo-spade { font-size: 20px; background: linear-gradient(to right, var(--red) 50%, var(--green) 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 9px; }
+    .nav-logo-icon { width: 26px; height: 26px; border-radius: 6px; display: block; }
     .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-link { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .2s; }
     .nav-link:hover { color: var(--text); }
@@ -348,7 +348,7 @@
       pointer-events: none;
     }
     .cta-box.visible { opacity: 1; transform: translateY(0); }
-    .cta-spade { font-size: 48px; display: block; margin-bottom: 24px; background: linear-gradient(to right, var(--red) 50%, var(--green) 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; }
+    .cta-icon { width: 80px; height: 80px; border-radius: 20px; display: block; margin: 0 auto 28px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 16px 48px rgba(229,72,77,.18), 0 16px 48px rgba(29,185,84,.18), 0 6px 20px rgba(0,0,0,.5); }
     .cta-title { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 14px; position: relative; }
     .cta-sub { font-size: 16px; color: var(--muted); margin-bottom: 40px; line-height: 1.65; position: relative; }
     .cta-note { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dimmed); letter-spacing: .5px; position: relative; }
@@ -358,7 +358,8 @@
       border-top: 1px solid var(--border); padding: 36px 48px;
       display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
     }
-    .footer-logo { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.3px; display: flex; align-items: center; gap: 7px; }
+    .footer-logo { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.3px; display: flex; align-items: center; gap: 8px; }
+    .footer-logo-icon { width: 20px; height: 20px; border-radius: 5px; display: block; opacity: 0.85; }
     .footer-links { display: flex; gap: 24px; }
     .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
     .footer-links a:hover { color: var(--text); }
@@ -396,7 +397,7 @@
 <!-- ── NAV ──────────────────────────────────────── -->
 <nav>
   <a class="nav-logo" href="#">
-    <span class="nav-logo-spade">♠</span>
+    <img class="nav-logo-icon" src="icon.png" alt="" />
     PokerApp
   </a>
   <div class="nav-links">
@@ -784,7 +785,7 @@
 <!-- ── CTA ───────────────────────────────────────── -->
 <section class="cta-section" id="notify">
   <div class="cta-box">
-    <span class="cta-spade">♠</span>
+    <img class="cta-icon" src="icon.png" alt="PokerApp icon" />
     <h2 class="cta-title">Ready to quantify your edge?</h2>
     <p class="cta-sub">PokerApp is coming to the App Store. The table has always known who the best player is. Now there's proof.</p>
     <a href="mailto:husseinabdou06@gmail.com?subject=PokerApp — Notify me at launch" class="btn-primary" style="margin:0 auto">
@@ -799,7 +800,7 @@
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <footer>
   <span class="footer-logo">
-    <span style="font-size:18px;background:linear-gradient(to right,#E5484D 50%,#1DB954 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">♠</span>
+    <img class="footer-logo-icon" src="icon.png" alt="" />
     PokerApp
   </span>
   <nav class="footer-links">
