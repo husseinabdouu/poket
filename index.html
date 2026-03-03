@@ -484,12 +484,12 @@
     <div class="card">
       <span class="card-icon">👤</span>
       <h3 class="card-title">Player Profiles</h3>
-      <p class="card-desc">Every player gets a stats page: total net, session count, best night, worst night, and a full session history.</p>
+      <p class="card-desc">Every player gets a dedicated stats page with win rate, streaks, best and worst nights, session history, and notable hands — all in one place.</p>
     </div>
     <div class="card">
       <span class="card-icon">📈</span>
       <h3 class="card-title">Earnings Chart</h3>
-      <p class="card-desc">A line chart showing each player's cumulative net over time. See the streaks, the crashes, and the comeback arcs.</p>
+      <p class="card-desc">Switch between a cumulative P/L line chart and a per-session bar chart. Filter by this month, last 6 months, or all time. See the streaks, crashes, and comebacks.</p>
     </div>
     <div class="card">
       <span class="card-icon">💸</span>
@@ -500,6 +500,16 @@
       <span class="card-icon">👥</span>
       <h3 class="card-title">Guest Invites</h3>
       <p class="card-desc">Anyone can join a game with a 6-character code — no account needed. Guests can claim their stats and create an account later.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧮</span>
+      <h3 class="card-title">Advanced Analytics</h3>
+      <p class="card-desc">Sharpe ratio, ROI, standard deviation, median session result, average finish rank, biggest upswing, biggest downswing. The stats that actually tell you if you're good.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <h3 class="card-title">Group Analytics</h3>
+      <p class="card-desc">A full sortable player comparison table inside every group. Sort by net, win rate, Sharpe, ROI, best night, worst night. Tap any player to expand their complete stat sheet.</p>
     </div>
   </div>
 
@@ -679,6 +689,80 @@
         <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Were you added as a guest?</div>
         <div style="font-size:15px;font-weight:600;margin-bottom:8px">Claim your stats →</div>
         <div style="font-size:13px;color:var(--dimmed);line-height:1.6">Select your name, send a claim request, and your admin approves it. Your total net, session count, and Hall of Fame entries all carry over.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats deep-dives -->
+  <div class="grid-2" style="margin-top:12px">
+    <div class="card-wide">
+      <div class="card-wide-text">
+        <h3 class="card-title">My Stats — Your edge, quantified</h3>
+        <p class="card-desc">A dedicated stats tab aggregates your results across every group you're in. Filter by time period. See cumulative P/L or per-session bars. Your Sharpe ratio tells you whether you win consistently or just get lucky. ROI shows your return on every dollar you've put in.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:12px;color:var(--dimmed);margin-bottom:4px;font-family:'JetBrains Mono',monospace">Sharpe Ratio</div>
+            <div style="font-size:20px;font-weight:700;color:var(--green)">1.43</div>
+            <div style="font-size:11px;color:var(--green);margin-top:2px">Good</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--dimmed);margin-bottom:4px;font-family:'JetBrains Mono',monospace">ROI</div>
+            <div style="font-size:20px;font-weight:700;color:var(--green)">+18.4%</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">on all buy-ins</div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between">
+          <div style="text-align:center">
+            <div style="font-size:16px;font-weight:700">54.2%</div>
+            <div style="font-size:11px;color:var(--muted)">Win rate</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:16px;font-weight:700">$47</div>
+            <div style="font-size:11px;color:var(--muted)">Avg/session</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:16px;font-weight:700">#3.1</div>
+            <div style="font-size:11px;color:var(--muted)">Avg rank</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:16px;font-weight:700;color:var(--green)">8</div>
+            <div style="font-size:11px;color:var(--muted)">Win streak</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wide">
+      <div class="card-wide-text">
+        <h3 class="card-title">Group Analytics — The full table</h3>
+        <p class="card-desc">Every group has a Stats tab showing a sortable player comparison table. Sort by net, win rate, Sharpe ratio, ROI, best night, or worst night. Tap any player to expand their full stat sheet — 12 metrics per player, including streaks, standard deviation, and recent form.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;gap:6px;margin-bottom:4px">
+          <span style="font-size:11px;font-weight:600;color:var(--text);background:var(--surface2);border:1.5px solid var(--border2);border-radius:100px;padding:4px 10px">Net ↓</span>
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:4px 10px">Win %</span>
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:4px 10px">Sharpe</span>
+          <span style="font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:4px 10px">ROI</span>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--dimmed);width:22px">#1</span>
+            <span style="font-size:14px;font-weight:600;flex:1">Hussein</span>
+            <span style="font-size:14px;font-weight:700;color:var(--green)">+$1,240</span>
+          </div>
+          <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--dimmed);width:22px">#2</span>
+            <span style="font-size:14px;font-weight:600;flex:1">Alex</span>
+            <span style="font-size:14px;font-weight:700;color:var(--green)">+$380</span>
+          </div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--dimmed);width:22px">#3</span>
+            <span style="font-size:14px;font-weight:600;flex:1">Jordan</span>
+            <span style="font-size:14px;font-weight:700;color:var(--red)">−$540</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
