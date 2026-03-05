@@ -289,7 +289,7 @@
       padding: 3px 10px; border-radius: 100px;
     }
 
-    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: start; }
+    .plans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-items: start; max-width: 760px; margin: 0 auto; }
     .plan-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--r-lg); padding: 36px 30px; position: relative;
@@ -426,7 +426,7 @@
     <a href="#notify" class="btn-primary"><span></span> Coming to the App Store</a>
     <a href="#features" class="btn-outline">See features ↓</a>
   </div>
-  <p class="hero-note">iOS · Free to download · No account needed to join</p>
+  <p class="hero-note">iOS · Free to download · 1 group free, unlimited sessions</p>
 </section>
 
 <div class="divider"></div>
@@ -581,25 +581,26 @@
       </ul>
     </div>
     <div class="role-card">
-      <span class="role-label">Free · Player Pro</span>
+      <span class="role-label">Free</span>
       <h3 class="role-title">Member</h3>
       <ul class="role-list">
         <li>Free account — join any group you're invited to</li>
         <li>See the live leaderboard, loserboard, and session settlements</li>
         <li>Add Venmo &amp; CashApp for one-tap payments</li>
-        <li><strong style="color:var(--text)">Player Pro:</strong> unlock your personal earnings chart, full session history, all-time stats, and push notifications when you're owed money</li>
+        <li>Basic player profile with stats and streaks</li>
+        <li>Create 1 group of your own with unlimited sessions</li>
       </ul>
     </div>
     <div class="role-card">
-      <span class="role-label">Admin Pro</span>
+      <span class="role-label">Poket Pro</span>
       <h3 class="role-title">Admin</h3>
       <ul class="role-list">
-        <li>Create and manage the group — your rules, your table</li>
+        <li>Unlimited groups — run as many tables as you want</li>
         <li>Log sessions: enter buy-ins and final stacks, app handles the math</li>
-        <li>Edit, delete, and recover sessions at any time</li>
-        <li>Invite guests, approve stat claims, and manage members</li>
-        <li>Run Seasons with automatic session grouping and leaderboards</li>
-        <li>Curate the Hall of Fame with notable hands</li>
+        <li>Seasons with automatic session grouping and leaderboards</li>
+        <li>Hall of Fame — log and curate notable hands</li>
+        <li>Advanced stats: Sharpe ratio, ROI, win rate</li>
+        <li>Guest claiming, session export, debt reminder notifications</li>
       </ul>
     </div>
   </div>
@@ -774,7 +775,7 @@
 <section class="section" id="pricing">
   <p class="eyebrow">Pricing</p>
   <h2 class="section-title">Simple, honest pricing.</h2>
-  <p class="section-sub">The admin pays. Their group plays free. Players who want their personal stats upgrade for themselves.</p>
+  <p class="section-sub">One subscription unlocks the full game for the admin. Their entire group plays free.</p>
 
   <div class="pricing-toggle">
     <span class="toggle-label active" id="lbl-monthly">Monthly</span>
@@ -793,77 +794,52 @@
       <div class="plan-price">
         <span class="plan-amount">$0</span>
       </div>
-      <p class="plan-note">Everything you need to try the app. The whole group can join, play, and settle — free, forever.</p>
+      <p class="plan-note">Everything you need to get started. One group, unlimited sessions — free forever.</p>
       <a href="#notify" class="plan-cta dark">Get started free</a>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li class="included"><span class="check">✓</span> Join any group you're invited to</li>
-        <li class="included"><span class="check">✓</span> Create 1 group — log up to 2 sessions</li>
+        <li class="included"><span class="check">✓</span> 1 group</li>
+        <li class="included"><span class="check">✓</span> Unlimited sessions</li>
         <li class="included"><span class="check">✓</span> Full leaderboard &amp; loserboard</li>
         <li class="included"><span class="check">✓</span> Settlement calculator</li>
         <li class="included"><span class="check">✓</span> Venmo &amp; CashApp integration</li>
-        <li class="included"><span class="check">✓</span> Basic player profile</li>
-        <li><span class="cross">✕</span> Personal earnings chart</li>
-        <li><span class="cross">✕</span> Full session history &amp; stats</li>
-        <li><span class="cross">✕</span> Push notifications</li>
-        <li><span class="cross">✕</span> Seasons, Hall of Fame (Admin Pro)</li>
-        <li><span class="cross">✕</span> Unlimited sessions (Admin Pro)</li>
+        <li class="included"><span class="check">✓</span> Basic player stats &amp; streaks</li>
+        <li><span class="cross">✕</span> Unlimited groups</li>
+        <li><span class="cross">✕</span> Seasons &amp; Hall of Fame</li>
+        <li><span class="cross">✕</span> Advanced stats (ROI, Sharpe, win rate)</li>
+        <li><span class="cross">✕</span> Guest claiming</li>
+        <li><span class="cross">✕</span> Session export</li>
+        <li><span class="cross">✕</span> Debt reminder notifications</li>
       </ul>
     </div>
 
-    <!-- Player Pro -->
+    <!-- Poket Pro -->
     <div class="plan-card featured">
-      <div class="plan-badge">For Players</div>
-      <span class="plan-name">Player Pro</span>
+      <div class="plan-badge">For Admins</div>
+      <span class="plan-name">Poket Pro</span>
       <div class="plan-price">
         <span class="plan-amount" id="pro-price">$2.99</span>
         <span class="plan-per">/mo</span>
       </div>
-      <p class="plan-note" id="pro-note">Your personal stats, unlocked. Know exactly where you stand — and where you've been.</p>
-      <a href="#notify" class="plan-cta green">Get Player Pro</a>
+      <p class="plan-note" id="pro-note">Unlimited groups, every feature, zero friction. Your group still plays free.</p>
+      <a href="#notify" class="plan-cta green">Get Poket Pro</a>
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li class="included"><span class="check">✓</span> Everything in Free</li>
-        <li class="included"><span class="check">✓</span> Personal earnings chart — see your P/L over time</li>
-        <li class="included"><span class="check">✓</span> Full session history with per-session breakdown</li>
-        <li class="included"><span class="check">✓</span> All-time stats: win rate, total won/lost, sessions played</li>
-        <li class="included"><span class="check">✓</span> Best &amp; worst night — full detail</li>
-        <li class="included"><span class="check">✓</span> Cross-group statistics</li>
-        <li class="included"><span class="check">✓</span> Push notification when you're owed money</li>
-        <li><span class="cross">✕</span> Create/run groups (Admin Pro)</li>
-        <li><span class="cross">✕</span> Unlimited sessions (Admin Pro)</li>
-        <li><span class="cross">✕</span> Seasons &amp; Hall of Fame (Admin Pro)</li>
-      </ul>
-    </div>
-
-    <!-- Admin Pro -->
-    <div class="plan-card">
-      <div class="plan-badge" style="background:rgba(229,72,77,.12);color:var(--red);border-color:rgba(229,72,77,.25)">For Admins</div>
-      <span class="plan-name">Admin Pro</span>
-      <div class="plan-price">
-        <span class="plan-amount" id="admin-price">$4.99</span>
-        <span class="plan-per">/mo</span>
-      </div>
-      <p class="plan-note" id="admin-note">Run the table. Every tool, zero friction. Your group plays free.</p>
-      <a href="#notify" class="plan-cta outline">Get Admin Pro</a>
-      <div class="plan-divider"></div>
-      <ul class="plan-features">
-        <li class="included"><span class="check">✓</span> Everything in Player Pro</li>
-        <li class="included"><span class="check">✓</span> <strong>Unlimited sessions</strong> — no caps, ever</li>
-        <li class="included"><span class="check">✓</span> Run up to 5 groups</li>
+        <li class="included"><span class="check">✓</span> <strong>Unlimited groups</strong></li>
         <li class="included"><span class="check">✓</span> Seasons with automatic session grouping</li>
         <li class="included"><span class="check">✓</span> Hall of Fame — log notable hands</li>
+        <li class="included"><span class="check">✓</span> Advanced stats: Sharpe ratio, ROI, win rate</li>
         <li class="included"><span class="check">✓</span> Guest invite codes &amp; stat claiming</li>
-        <li class="included"><span class="check">✓</span> Edit &amp; recover deleted sessions</li>
-        <li class="included"><span class="check">✓</span> Push notifications when players owe money</li>
-        <li class="included"><span class="check">✓</span> Early access to new features</li>
+        <li class="included"><span class="check">✓</span> Session export</li>
+        <li class="included"><span class="check">✓</span> Debt reminder push notifications</li>
       </ul>
     </div>
 
   </div>
 
   <p style="text-align:center;font-size:13px;color:var(--dimmed);margin-top:36px;font-family:'JetBrains Mono',monospace;line-height:1.7">
-    Admin pays once. Their entire group joins free and sees everything.<br>Players upgrade Player Pro for themselves — their own stats, their own choice.
+    Admin subscribes once. Their entire group joins free and sees everything.
   </p>
 </section>
 
@@ -927,10 +903,10 @@
     document.getElementById('lbl-monthly').classList.toggle('active', !isAnnual);
     document.getElementById('lbl-annual').classList.toggle('active', isAnnual);
 
-    document.getElementById('pro-price').textContent   = isAnnual ? '$1.67' : '$2.99';
-    document.getElementById('admin-price').textContent = isAnnual ? '$2.92' : '$4.99';
-    document.getElementById('pro-note').textContent    = isAnnual ? 'Your personal stats, unlocked. Billed $19.99/year — save 44%.' : 'Your personal stats, unlocked. Know exactly where you stand — and where you\'ve been.';
-    document.getElementById('admin-note').textContent  = isAnnual ? 'Run the table. Every tool, zero friction. Billed $34.99/year — save 42%.' : 'Run the table. Every tool, zero friction. Your group plays free.';
+    document.getElementById('pro-price').textContent = isAnnual ? '$1.67' : '$2.99';
+    document.getElementById('pro-note').textContent  = isAnnual
+      ? 'Unlimited groups, every feature, zero friction. Billed $19.99/year — save 44%.'
+      : 'Unlimited groups, every feature, zero friction. Your group still plays free.';
   }
 </script>
 
